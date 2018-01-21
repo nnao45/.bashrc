@@ -58,8 +58,11 @@ fi
 
 if [ "$color_prompt" = yes ]; then
 #    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w \$\[\033[00m\] '
-     PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\W \$\[\033[00m\] '
-
+     if [ "$(uname)" = 'Darwin' ]; then
+        PS1='\e[$[32+$RANDOM % 5]m \[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\W \$\[\033[00m\] '
+     else
+        PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\W \$\[\033[00m\] '
+     fi
 else
 #    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
      PS1='\u@\h:\W\$ '
@@ -127,12 +130,8 @@ fi
 alias ll='ls -l'
 alias la='ls -A'
 alias l='ls -CF'
-
-if [ "$(uname)" = 'Darwin' ]; then
-	alias vi='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
-	alias vim='env_LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
-fi
-
+alias vi='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
+alias vim='env_LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
 alias nkf8='nkf -w --overwrite ./*'
 
 # Source global definitions
@@ -161,8 +160,5 @@ export GOROOT=/usr/src/go
 export GOPATH=/usr/src/go-third-party
 export PATH=$GOPATH/bin:$PATH
 export PATH=$GOROOT/bin:$PATH
-
-if [ "$(uname)" = 'Darwin' ]; then
-  export PATH=$HOME/.nodebrew/current/bin:$PATH
-  export PATH=$PATH:/Users/nnao45/.nodebrew/current/bin
-fi
+export PATH=$HOME/.nodebrew/current/bin:$PATH
+export PATH=$PATH:/Users/nnao45/.nodebrew/current/bin
