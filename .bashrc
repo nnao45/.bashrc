@@ -123,6 +123,11 @@ alias mv='mv -i'
 if [ "$(uname)" = 'Darwin' ]; then
     alias ls='ls -G'
 else
+
+    if [ ! -e ~/.colorrc ]; then
+	    dircolors -p > ~/.colorrc
+    fi
+
     eval `dircolors ~/.colorrc`
     alias ls='ls --color=auto'
 fi
@@ -163,7 +168,7 @@ fi
 
 export GOBIN=/Users/nnao45/go/bin/
 export GOROOT=/usr/src/go
-export GOPATH=/usr/src/go-third-party
+export GOPATH=/usr/src/go-3rd-party
 export PATH=$GOPATH/bin:$PATH
 export PATH=$GOROOT/bin:$PATH
 
