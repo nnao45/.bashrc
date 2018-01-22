@@ -133,7 +133,7 @@ else
 fi
 
 alias ll='ls -l'
-alias la='ls -A'
+alias la='ls -la'
 alias l='ls -CF'
 
 if [ "$(uname)" = 'Darwin' ]; then
