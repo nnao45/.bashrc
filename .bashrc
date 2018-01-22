@@ -130,8 +130,14 @@ fi
 alias ll='ls -l'
 alias la='ls -A'
 alias l='ls -CF'
-alias vi='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
-alias vim='env_LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
+
+if [ "$(uname)" = 'Darwin' ]; then
+	alias vi='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
+	alias vim='env_LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
+else
+	alias vi='vim'
+fi
+
 alias nkf8='nkf -w --overwrite ./*'
 
 # Source global definitions
@@ -160,5 +166,8 @@ export GOROOT=/usr/src/go
 export GOPATH=/usr/src/go-third-party
 export PATH=$GOPATH/bin:$PATH
 export PATH=$GOROOT/bin:$PATH
-export PATH=$HOME/.nodebrew/current/bin:$PATH
-export PATH=$PATH:/Users/nnao45/.nodebrew/current/bin
+
+if [ "$(uname)" = 'Darwin' ]; then
+	export PATH=$HOME/.nodebrew/current/bin:$PATH
+	export PATH=$PATH:/Users/nnao45/.nodebrew/current/bin
+fi
