@@ -128,7 +128,7 @@ else
 	    dircolors -p > ~/.colorrc
     fi
 
-    eval `dircolors ~/.colorrc`
+    #eval `dircolors ~/.colorrc`
     alias ls='ls --color=auto'
 fi
 
