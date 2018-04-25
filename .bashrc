@@ -59,9 +59,9 @@ fi
 if [ "$color_prompt" = yes ]; then
 #    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w \$\[\033[00m\] '
      if [ "$(uname)" = 'Darwin' ]; then
-        PS1='\e[$[32+$RANDOM % 5]m \[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\W \$\[\033[00m\] '
-     else
-        PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\W \$\[\033[00m\] '
+#        PS1='\e[$[32+$RANDOM % 5]m \[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\W \$\[\033[00m\] '
+#     else
+        PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\W¥n \$\[\033[00m\] '
      fi
 else
 #    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
@@ -123,26 +123,15 @@ alias mv='mv -i'
 if [ "$(uname)" = 'Darwin' ]; then
     alias ls='ls -G'
 else
-
-    if [ ! -e ~/.colorrc ]; then
-	    dircolors -p > ~/.colorrc
-    fi
-
-    #eval `dircolors ~/.colorrc`
+    eval `dircolors ~/.colorrc`
     alias ls='ls --color=auto'
 fi
 
 alias ll='ls -l'
-alias la='ls -la'
+alias la='ls -A'
 alias l='ls -CF'
-
-if [ "$(uname)" = 'Darwin' ]; then
-	alias vi='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
-	alias vim='env_LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
-else
-	alias vi='vim'
-fi
-
+alias vi='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
+alias vim='env_LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
 alias nkf8='nkf -w --overwrite ./*'
 
 # Source global definitions
@@ -162,17 +151,21 @@ if [ -d "$HOME/bin" ] ; then
 	PATH="$HOME/bin:$PATH"
 fi
 
-#export LANGUAGE='ja_JP.UTF-8'
-#export LC_CTYPE='ja_JP.UTF-8'
-#export LC_ALL='ja_JP.UTF-8'
-
-export GOBIN=/Users/nnao45/go/bin/
-export GOROOT=/usr/src/go
-export GOPATH=/usr/src/go-third-party
-export PATH=$GOPATH/bin:$PATH
-export PATH=$GOROOT/bin:$PATH
+export LANGUAGE='ja_JP.UTF-8'
+export LC_CTYPE='ja_JP.UTF-8'
+export LC_ALL='ja_JP.UTF-8'
 
 if [ "$(uname)" = 'Darwin' ]; then
-	export PATH=$HOME/.nodebrew/current/bin:$PATH
+	export GOBIN=/Users/nnao45/go/bin
+	export GOROOT=/Users/nnao45/go
+	export GOPATH=/Users/nnao45/go-third-party
 	export PATH=$PATH:/Users/nnao45/.nodebrew/current/bin
+else
+	export GOBIN=/usr/src/go/bin
+	export GOROOT=/usr/src/go
+	export GOPATH=/usr/src/go-third-party
 fi
+
+export PATH=$GOPATH/bin:$PATH
+export PATH=$GOROOT/bin:$PATH
+export PATH=$HOME/.nodebrew/current/bin:$PATH
