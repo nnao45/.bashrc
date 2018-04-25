@@ -58,11 +58,13 @@ fi
 
 if [ "$color_prompt" = yes ]; then
 #    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w \$\[\033[00m\] '
-     if [ "$(uname)" = 'Darwin' ]; then
-#        PS1='\e[$[32+$RANDOM % 5]m \[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\W \$\[\033[00m\] '
+#     if [ "$(uname)" = 'Darwin' ]; then
+#        PS1='\e[$[32+$RANDOM % 5]m\uf8ff \[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\W \$\[\033[00m\] '
 #     else
-        PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\W¥n \$\[\033[00m\] '
-     fi
+#        PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\W¥n \$\[\033[00m\] '
+#    fi
+	PS1='\[\033[01;32m\]\u@\h\[\033[00m\] \e[$[32+$RANDOM % 5]m=> \[\033[01;36m\]\w\n\e[$[32+$RANDOM % 5]m>\e[$[32+$RANDOM % 5]m>\e[$[32+$RANDOM % 5]m>\[\e[0m\] '
+#     fi
 else
 #    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
      PS1='\u@\h:\W\$ '
@@ -123,15 +125,22 @@ alias mv='mv -i'
 if [ "$(uname)" = 'Darwin' ]; then
     alias ls='ls -G'
 else
-    eval `dircolors ~/.colorrc`
+    #eval `dircolors ~/.colorrc`
     alias ls='ls --color=auto'
 fi
 
 alias ll='ls -l'
 alias la='ls -A'
 alias l='ls -CF'
-alias vi='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
-alias vim='env_LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
+
+if [ "$(uname)" = 'Darwin' ]; then
+	alias vi='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
+	alias vim='env_LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
+else
+	alias vi='/usr/bin/vi'
+	alias vim='/usr/bin/vim'
+fi
+
 alias nkf8='nkf -w --overwrite ./*'
 
 # Source global definitions
