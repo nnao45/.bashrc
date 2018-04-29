@@ -175,6 +175,13 @@ else
 	export GOPATH=/usr/src/go-third-party
 fi
 
+function sk {
+  mkdir "$1" ; touch "$1"/"$1.scala"
+}
+
+export -f sk
+
+export LSCOLORS=gxfxcxdxbxegedabagacad
 export PATH=$GOPATH/bin:$PATH
 export PATH=$GOROOT/bin:$PATH
 export PATH=$HOME/.nodebrew/current/bin:$PATH
