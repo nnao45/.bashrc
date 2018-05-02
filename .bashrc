@@ -183,6 +183,10 @@ function tkill {
  tmux kill-session -t "$1"
 }
 
+function tkillall {
+ tmux kill-server
+}
+
 export -f sk
 
 export LSCOLORS=gxfxcxdxbxegedabagacad
