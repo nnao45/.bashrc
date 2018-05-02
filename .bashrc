@@ -179,6 +179,10 @@ function sk {
   mkdir "$1" ; touch "$1"/"$1.scala"
 }
 
+function tkill {
+ tmux kill-session -t "$1"
+}
+
 export -f sk
 
 export LSCOLORS=gxfxcxdxbxegedabagacad
