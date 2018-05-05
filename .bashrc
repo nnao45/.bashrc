@@ -132,6 +132,7 @@ fi
 alias ll='ls -l'
 alias la='ls -la'
 alias l='ls -CF'
+alias t='tmux'
 
 if [ "$(uname)" = 'Darwin' ]; then
 	alias vi='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
