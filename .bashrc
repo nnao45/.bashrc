@@ -188,6 +188,33 @@ function tkillall {
  tmux kill-server
 }
 
+function pane {
+ ## get options ##
+ while getopts :s opt
+ do
+ case $opt in
+	"s" ) readonly FLG_S="TRUE" ;;
+	* ) usage; exit 1 ;;
+ esac
+ done
+
+ shift `expr $OPTIND - 1`
+ ## tmux pane split ##
+ if [ $1 ]; then
+ 	cnt_pane=1
+ while [ $cnt_pane -lt $1 ]
+ do
+ if [ $(( $cnt_pane & 1 )) ]; then
+ 	tmux split-window -h
+ else
+ 	tmux split-window -v
+ fi
+ tmux select-layout tiled 1>/dev/null
+ cnt_pane=$(( $cnt_pane + 1 ))
+ done
+ fi
+}
+
 export -f sk
 
 export LSCOLORS=gxfxcxdxbxegedabagacad
