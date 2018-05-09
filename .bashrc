@@ -177,55 +177,59 @@ else
 fi
 
 function sk {
-  mkdir "$1" ; touch "$1"/"$1.scala"
+	mkdir "$1" ; touch "$1"/"$1.scala"
 }
 
 function tkill {
- tmux kill-session -t "$1"
+	tmux kill-session -t "$1"
 }
 
 function tkillall {
- tmux kill-server
+	tmux kill-server
 }
 
 function see {
- local HOST=`cat /etc/hosts | peco | awk '{print $1}'`
- #commentout imple
- if echo "${HOST}" | grep '^#' > /dev/null; then
-	 echo "it's comment out"
- else
-	 adssh ${HOST}
- fi
+	local HOST=`cat /etc/hosts | peco | awk '{print $1}'`
+
+	#commentout imple
+	if echo "${HOST}" | grep '^#' > /dev/null; then
+		echo "it's comment out"
+	else
+		adssh ${HOST}
+ 	fi
 }
 
 function pane {
- ## get options ##
- while getopts :s opt
- do
- case $opt in
-	"s" ) readonly FLG_S="TRUE" ;;
-	* ) usage; exit 1 ;;
- esac
- done
+	## get options ##
+	while getopts :s opt
+	do
+	case $opt in
+		"s" ) readonly FLG_S="TRUE" ;;
+		* ) usage; exit 1 ;;
+	esac
+	done
+	shift `expr $OPTIND - 1`
 
- shift `expr $OPTIND - 1`
- ## tmux pane split ##
- if [ $1 ]; then
- 	cnt_pane=1
- while [ $cnt_pane -lt $1 ]
- do
- if [ $(( $cnt_pane & 1 )) ]; then
- 	tmux split-window -h
- else
- 	tmux split-window -v
- fi
- tmux select-layout tiled 1>/dev/null
- cnt_pane=$(( $cnt_pane + 1 ))
- done
- fi
+	## tmux pane split ##
+	if [ $1 ]; then
+		cnt_pane=1
+	while [ $cnt_pane -lt $1 ]
+	do
+	if [ $(( $cnt_pane & 1 )) ]; then
+ 		tmux split-window -h
+	else
+		tmux split-window -v
+	fi
+	tmux select-layout tiled 1>/dev/null
+	cnt_pane=$(( $cnt_pane + 1 ))
+	done
+	fi
+ 
+	#OPTION: start session with "synchronized-panes"
+	if [ "$FLG_S" = "TRUE" ]; then
+		tmux set-window-option synchronize-panes 1>/dev/null
+	fi
 }
-
-export -f sk
 
 export LSCOLORS=gxfxcxdxbxegedabagacad
 export PATH=$GOPATH/bin:$PATH
