@@ -196,17 +196,21 @@ function tkill {
 function tkillall {
 	tmux kill-server
 }
+function who {
+	tail -n +5 /etc/hosts | grep --color "$1"
+}
 
 function see {
-	local HOST=`cat /etc/hosts | peco | awk '{print $1}'`
-
+	local HOST=`tail -n +5 /etc/hosts | peco | awk '{print $1}'`
 	#commentout imple
 	if echo "${HOST}" | grep '^#' > /dev/null; then
 		echo "it's comment out"
 	else
 		adssh ${HOST}
- 	fi
+	fi
 }
+
+
 
 function pane {
 	## get options ##
