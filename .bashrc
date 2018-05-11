@@ -28,7 +28,7 @@ shopt -s checkwinsize
 #shopt -s globstar
 
 # make less more friendly for non-text input files, see lesspipe(1)
-#[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 # set variable identifying the chroot you work in (used in the prompt below)
 #if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
@@ -57,24 +57,15 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
-#    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w \$\[\033[00m\] '
-#     if [ "$(uname)" = 'Darwin' ]; then
-#        PS1='\e[$[32+$RANDOM % 5]m\uf8ff \[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\W \$\[\033[00m\] '
-#     else
-#        PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\W¥n \$\[\033[00m\] '
-#    fi
 	PS1='\[\033[01;32m\]\u@\h\[\033[00m\] \e[$[32+$RANDOM % 5]m=> \[\033[01;36m\]\w\n\e[$[32+$RANDOM % 5]m>\e[$[32+$RANDOM % 5]m>\e[$[32+$RANDOM % 5]m>\[\e[0m\] '
-#     fi
 else
-#    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
-     PS1='\u@\h:\W\$ '
+    PS1='\u@\h:\W\$ '
 fi
 unset color_prompt force_color_prompt
 
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
 xterm*|rxvt*)
-#    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
      PS1="\[\e]0;\u@\h: \w\a\]$PS1"
     ;;
 *)
@@ -144,18 +135,6 @@ fi
 
 alias nkf8='nkf -w --overwrite ./*'
 
-# Source global definitions
-#if [ -f /etc/bashrc ]; then
-#	. /etc/bashrc
-#fi
-
-#if [ -n "$BASH_VERSION" ]; then
-	# include .bashrc if it exists
-#	if [ -f "$HOME/.bashrc" ]; then
-#		. "$HOME/.bashrc"
-#	fi
-#fi
-
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/bin" ] ; then
 	PATH="$HOME/bin:$PATH"
@@ -166,10 +145,10 @@ export LC_CTYPE='ja_JP.UTF-8'
 export LC_ALL='ja_JP.UTF-8'
 
 if [ "$(uname)" = 'Darwin' ]; then
-	export GOBIN=/Users/nnao45/go/bin
-	export GOROOT=/Users/nnao45/go
-	export GOPATH=/Users/nnao45/go-third-party
-	export PATH=$PATH:/Users/nnao45/.nodebrew/current/bin
+	export GOBIN=/Users/s02435/go/bin
+	export GOROOT=/Users/s02435/go
+	export GOPATH=/Users/s02435/go-third-party
+	export PATH=$PATH:/Users/s02435/.nodebrew/current/bin
 else
 	export GOBIN=/usr/src/go/bin
 	export GOROOT=/usr/src/go
@@ -177,104 +156,111 @@ else
 fi
 
 if [[ $TERM = screen ]] || [[ $TERM = screen-256color ]] ; then
-  LOGDIR=$HOME/Documents/term_logs
-  LOGFILE=$(hostname)_$(date +%Y-%m-%d_%H%M%S_%N.log)
-  [ ! -d $LOGDIR ] && mkdir -p $LOGDIR
-  tmux  set-option default-terminal "screen" \; \
-    pipe-pane        "cat >> $LOGDIR/$LOGFILE" \; \
-    display-message  "💾Started logging to $LOGDIR/$LOGFILE"
+    LOGDIR=$HOME/Documents/term_logs
+    LOGFILE=$(hostname)_$(date +%Y-%m-%d_%H%M%S_%N.log)
+    [ ! -d $LOGDIR ] && mkdir -p $LOGDIR
+    tmux  set-option default-terminal "screen" \; \
+        pipe-pane        "cat >> $LOGDIR/$LOGFILE" \; \
+        display-message  "💾Started logging to $LOGDIR/$LOGFILE"
 fi
 
 function sk {
-	mkdir "$1" ; touch "$1"/"$1.scala"
+    mkdir "$1" ; touch "$1"/"$1.scala"
 }
 
 function tkill {
-	tmux kill-session -t "$1"
+    tmux kill-session -t "$1"
 }
 
 function tkillall {
-	tmux kill-server
+    tmux kill-server
 }
+
+function adssh {
+    ssh -i ~/Documents/keys/ca_perman yokoyama_naoya@"$1"
+}
+
+function ciassh {
+    ssh cia_infra@"$1"
+}
+
+function itsmine {
+    chown 1051436384:1796141739 "$1"
+}
+
 function who {
-	tail -n +5 /etc/hosts | grep --color "$1"
+    tail -n +5 /etc/hosts | grep --color "$1"
 }
 
 function see {
-	local HOST=`tail -n +5 /etc/hosts | peco | awk '{print $1}'`
-	#commentout imple
-	if echo "${HOST}" | grep '^#' > /dev/null; then
-		echo "it's comment out"
-	else
-		adssh ${HOST}
-	fi
+    local HOST=`tail -n +5 /etc/hosts | peco | awk '{print $1}'`
+    #commentout imple
+    if echo "${HOST}" | grep '^#' > /dev/null; then
+        echo "it's comment out"
+    else
+	    adssh ${HOST}
+    fi
 }
 
-
-
 function pane {
-	## get options ##
-	while getopts :s opt
-	do
-	case $opt in
-		"s" ) readonly FLG_S="TRUE" ;;
-		* ) usage; exit 1 ;;
-	esac
-	done
-	shift `expr $OPTIND - 1`
+    ## get options ##
+    while getopts :s opt
+    do
+    case $opt in
+	    "s" ) readonly FLG_S="TRUE" ;;
+	    * ) usage; exit 1 ;;
+    esac
+    done
 
-	## tmux pane split ##
-	if [ $1 ]; then
-		cnt_pane=1
-	while [ $cnt_pane -lt $1 ]
-	do
-	if [ $(( $cnt_pane & 1 )) ]; then
- 		tmux split-window -h
-	else
-		tmux split-window -v
-	fi
-	tmux select-layout tiled 1>/dev/null
-	cnt_pane=$(( $cnt_pane + 1 ))
-	done
-	fi
- 
-	#OPTION: start session with "synchronized-panes"
-	if [ "$FLG_S" = "TRUE" ]; then
-		tmux set-window-option synchronize-panes 1>/dev/null
-	fi
+    shift `expr $OPTIND - 1`
+    ## tmux pane split ##
+    if [ $1 ]; then
+    cnt_pane=1
+    while [ $cnt_pane -lt $1 ]
+    do
+    if [ $(( $cnt_pane & 1 )) ]; then
+ 	    tmux split-window -h
+    else
+ 	    tmux split-window -v
+    fi
+    tmux select-layout tiled 1>/dev/null
+    cnt_pane=$(( $cnt_pane + 1 ))
+    done
+    fi
 }
 
 export HISTCONTROL="ignoredups"
 function peco-history {
-  local NUM=$(history | wc -l)
-  local FIRST=$((-1*(NUM-1)))
+    local NUM=$(history | wc -l)
+    local FIRST=$((-1*(NUM-1)))
 
-  if [ $FIRST -eq 0 ] ; then
-    # Remove the last entry, "peco-history"
-    history -d $((HISTCMD-1))
-    echo "No history" >&2
-    return
-  fi
+    if [ $FIRST -eq 0 ] ; then
+        # Remove the last entry, "peco-history"
+        history -d $((HISTCMD-1))
+        echo "No history" >&2
+        return
+    fi
 
-  local CMD=$(fc -l $FIRST | sort -k 2 -k 1nr | uniq -f 1 | sort -nr | sed -E 's/^[0-9]+[[:blank:]]+//' | peco | head -n 1)
+    local CMD=$(fc -l $FIRST | sort -k 2 -k 1nr | uniq -f 1 | sort -nr | sed -E 's/^[0-9]+[[:blank:]]+//' | peco | head -n 1)
 
-  if [ -n "$CMD" ] ; then
+    if [ -n "$CMD" ] ; then
     # Replace the last entry, "peco-history", with $CMD
     history -s $CMD
 
     if type osascript > /dev/null 2>&1 ; then
       # Send UP keystroke to console
-      (osascript -e 'tell application "System Events" to keystroke (ASCII character 30)' &)
+        (osascript -e 'tell application "System Events" to keystroke (ASCII character 30)' &)
     fi
 
-  else
-    # Remove the last entry, "peco-history"
-    history -d $((HISTCMD-1))
-  fi
+    else
+        # Remove the last entry, "peco-history"
+        history -d $((HISTCMD-1))
+    fi
 }
 bind '"\C-r":"peco-history\n"'
 
 export LSCOLORS=gxfxcxdxbxegedabagacad
+tabs -4
 export PATH=$GOPATH/bin:$PATH
 export PATH=$GOROOT/bin:$PATH
 export PATH=$HOME/.nodebrew/current/bin:$PATH
