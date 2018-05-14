@@ -227,6 +227,11 @@ function pane {
     cnt_pane=$(( $cnt_pane + 1 ))
     done
     fi
+    
+    #OPTION: start session with "synchronized-panes"
+    if [ "$FLG_S" = "TRUE" ]; then
+        tmux set-window-option synchronize-panes 1>/dev/null
+    fi
 }
 
 export HISTCONTROL="ignoredups"
