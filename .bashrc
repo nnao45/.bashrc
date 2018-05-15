@@ -145,10 +145,10 @@ export LC_CTYPE='ja_JP.UTF-8'
 export LC_ALL='ja_JP.UTF-8'
 
 if [ "$(uname)" = 'Darwin' ]; then
-	export GOBIN=/Users/XXXX/go/bin
-	export GOROOT=/Users/XXXX/go
-	export GOPATH=/Users/XXXX/go-third-party
-	export PATH=$PATH:/Users/XXXX/.nodebrew/current/bin
+	export GOBIN=/Users/$USER/go/bin
+	export GOROOT=/Users/$USER/go
+	export GOPATH=/Users/$USER/go-third-party
+	export PATH=$PATH:/Users/$USER/.nodebrew/current/bin
 else
 	export GOBIN=/usr/src/go/bin
 	export GOROOT=/usr/src/go
