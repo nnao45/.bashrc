@@ -57,7 +57,7 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
-	PS1='\[\033[01;32m\]\u@\h\[\033[00m\] \e[$[32+$RANDOM % 5]m=> \[\033[01;36m\]\w\n\e[$[32+$RANDOM % 5]m>\e[$[32+$RANDOM % 5]m>\e[$[32+$RANDOM % 5]m>\[\e[0m\] '
+	PS1='\[\033[01;32m\]\u@\h\[\033[00m\] \e[$[32+$RANDOM % 5]m\]=> \[\033[01;36m\]\w\n\e[$[32+$RANDOM % 5]m\]>\e[$[32+$RANDOM % 5]m\]>\e[$[32+$RANDOM % 5]m\]>\[\e[0m\] '
 else
     PS1='\u@\h:\W\$ '
 fi
