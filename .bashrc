@@ -184,6 +184,8 @@ function ciassh {
     ssh cia_infra@"$1"
 }
 
+alias xssh='xpanes --ssh -c "adssh {}"'
+
 function itsmine {
     chown 1051436384:1796141739 "$1"
 }
