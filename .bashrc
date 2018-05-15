@@ -168,6 +168,24 @@ function sk {
     mkdir "$1" ; touch "$1"/"$1.scala"
 }
 
+function reverse {
+    if [ -p /dev/stdin ] ; then
+        local input=$(cat -)
+        local i=0
+
+        echo "${input}" | while read line; do
+            local array=()
+            for e in ${line[@]}; do
+                array=(${e} "${array[@]}") 
+            done
+
+            echo "${array[@]}"
+        done
+    else
+        echo "no stdin."
+    fi
+}
+
 function tkill {
     tmux kill-session -t "$1"
 }
